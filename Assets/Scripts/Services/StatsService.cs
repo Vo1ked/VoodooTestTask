@@ -10,16 +10,21 @@ public class StatsService : IStatsService
 
     public int FavoriteSkin
     {
-        get
-        {
-            return (PlayerPrefs.GetInt("FavoriteSkin", 0));
-        }
-        set
-        {
-            PlayerPrefs.SetInt("FavoriteSkin", value);
-        }
+        get => PlayerPrefs.GetInt("FavoriteSkin", 0);
+        set => PlayerPrefs.SetInt("FavoriteSkin", value);
     }
 
+    public int FavoriteBrush   
+    {
+	    get => PlayerPrefs.GetInt("FavoriteBrush", 0);
+	    set => PlayerPrefs.SetInt("FavoriteBrush", value);
+    }
+
+	public int FavoriteColor
+	{
+		get => PlayerPrefs.GetInt("FavoriteColor", 0);
+		set => PlayerPrefs.SetInt("FavoriteColor", value);
+	}
     private StatsConfig m_StatsConfig;
     
     [Inject]

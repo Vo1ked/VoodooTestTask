@@ -14,8 +14,8 @@ namespace Services
             m_Features = new Dictionary<Feature, IFeature>();
             foreach (var feature in features)
             {
-                m_Features.Add(feature.m_Name, feature);
-                var savedState = PlayerPrefs.GetInt("Feature_" + feature.m_Name, 1);
+                m_Features.Add(feature.Name, feature);
+                var savedState = PlayerPrefs.GetInt("Feature_" + feature.Name, 1);
                 if (savedState is 1)
                 {
                     feature.Enable();

@@ -1,13 +1,13 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using Zenject;
 using Random = UnityEngine.Random;
 
 public enum GamePhase
 {
     MAIN_MENU,
+    BRUSH_SELECT,
     LOADING,
     GAME,
     PRE_END,
@@ -406,7 +406,7 @@ public class GameService : IGameService
 
     public GameObject PickBrush()
     {
-        return m_Brushs[PickBrushID()].m_Prefab;
+        return m_Brushs[PickBrushID()].m_BrushPrefab;
     }
 
     public GameObject PickPowerUp()

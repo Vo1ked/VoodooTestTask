@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Zenject;
 
@@ -23,6 +24,9 @@ public class MainMenuView : View<MainMenuView>
 
     [Header("Ranks")]
     public string[] m_Ratings;
+    
+    [SerializeField] private Button m_BrushSelectButton;
+    [SerializeField] private GameObject m_BrushSelect;
 
     private IStatsService m_StatsService;
 
@@ -44,7 +48,20 @@ public class MainMenuView : View<MainMenuView>
         if (GameService.currentPhase == GamePhase.MAIN_MENU)
             GameService.ChangePhase(GamePhase.LOADING);
     }
-
+    public void AddBrushButton(UnityAction brushAction)
+    {
+        m_BrushSelectButton.gameObject.SetActive(true);
+        m_BrushSelectButton.onClick.AddListener(brushAction);
+        m_BrushSelect.SetActive(false);
+    }
+    
+    public void RemoveBrushButton()
+    {
+        m_BrushSelectButton.gameObject.SetActive(false);
+        m_BrushSelectButton.onClick.RemoveAllListeners();
+        m_BrushSelect.SetActive(true);
+    }
+    
     protected override void OnGamePhaseChanged(GamePhase _GamePhase)
     {
         base.OnGamePhaseChanged(_GamePhase);

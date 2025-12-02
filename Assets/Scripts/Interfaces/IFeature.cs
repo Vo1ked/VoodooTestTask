@@ -4,7 +4,7 @@ namespace Interfaces
 {
     public interface IFeature
     {
-        public Feature m_Name { get; }
+        public Feature Name { get; }
         public bool State { get; }
 
         public void Enable();

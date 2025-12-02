@@ -24,7 +24,7 @@ namespace UI
             foreach (var feature in m_FeaturesService.GetFeatures())
             {
                 var toggle = Instantiate(m_TogglePrefab, transform);
-                toggle.Initialize(feature.m_Name,feature.State,ChangeState);
+                toggle.Initialize(feature.Name,feature.State,ChangeState);
             }
         }
 

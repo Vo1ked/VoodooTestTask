@@ -137,7 +137,7 @@ public abstract class Player : MappedObject, IDrawLine
 		m_SearchBuffer = new List<GameObject> ();
 
 		// Runtime
-		GameObject brushObject = Instantiate (_Brush.m_Prefab, m_Transform) as GameObject;
+		GameObject brushObject = Instantiate (_Brush.m_BrushPrefab, m_Transform) as GameObject;
 		m_Brush = brushObject.GetComponent<Brush> ();
 
         m_DrawLines[0].Init(this, m_Brush);
@@ -511,7 +511,7 @@ public abstract class Player : MappedObject, IDrawLine
 
 	public virtual void AddBrush()
 	{
-		GameObject brushObject = Instantiate(m_BrushData.m_Prefab, m_Transform.position, m_Transform.rotation) as GameObject;
+		GameObject brushObject = Instantiate(m_BrushData.m_BrushPrefab, m_Transform.position, m_Transform.rotation) as GameObject;
         Brush brush = brushObject.GetComponent<Brush>();
 
 		brush.Init(this, Brush.EBrushType.SECONDARY);

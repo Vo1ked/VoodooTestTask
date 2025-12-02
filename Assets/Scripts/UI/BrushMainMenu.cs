@@ -13,7 +13,7 @@ public class BrushMainMenu : MonoBehaviour {
         if (m_Current != null)
             GameObject.Destroy(m_Current.gameObject);
 
-        Brush brush = Instantiate(_skin.Brush.m_Prefab).GetComponent<Brush>();
+        Brush brush = Instantiate(_skin.Brush.m_BrushPrefab).GetComponent<Brush>();
         m_Current = brush.transform;
         m_Current.SetParent(m_BrushParent);
         m_Current.localScale = Vector3.one;

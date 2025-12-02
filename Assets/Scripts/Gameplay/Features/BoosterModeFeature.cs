@@ -5,7 +5,7 @@ namespace Gameplay.Features
 {
     public class BoosterModeFeature : IFeature
     {
-        public Feature m_Name => Feature.BoosterPlayMode;
+        public Feature Name => Feature.BoosterPlayMode;
         public bool State => m_State;
         private bool m_State = false;
         public void Enable()

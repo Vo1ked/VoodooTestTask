@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public interface IStatsService
 {
@@ -10,6 +7,8 @@ public interface IStatsService
     void SetLastXP(int xp);
     void GainXP();
     int FavoriteSkin { get; set; }
+    int FavoriteBrush { get; set; }
+    int FavoriteColor { get; set; }
     int m_LastGain { get; set; }
     int GetXP();
     int GetPlayerLevel();

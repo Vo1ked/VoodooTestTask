@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SkinData : ScriptableObject
 {
+    [field: SerializeField] public int SkinID {get; private set; }
     public ColorData Color;
     public BrushData Brush;
 }

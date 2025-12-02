@@ -1,16 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class BrushMenu : MonoBehaviour {
-
+    
+    [field:SerializeField] private int BrushId;
     public List<GameObject> m_BrushParts;
+    private List<Renderer> m_Renderers = new List<Renderer>();
+
+    private void Awake()
+    {
+        foreach (var t in m_BrushParts)
+        {
+            m_Renderers.Add(t.GetComponent<Renderer>());
+        }
+    }
 
     public void SetNewColor(Color _Color)
     {
-        for (int i = 0; i < m_BrushParts.Count; i++)
+        foreach (var t in m_Renderers)
         {
-            m_BrushParts[i].GetComponent<Renderer>().material.color = _Color;
+            t.material.color = _Color;
         }
     }
 }
