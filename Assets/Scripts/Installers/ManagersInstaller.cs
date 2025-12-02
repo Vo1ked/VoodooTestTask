@@ -1,3 +1,6 @@
+using Gameplay.Features;
+using Interfaces;
+using Services;
 using UnityEngine;
 using Zenject;
 
@@ -18,6 +21,7 @@ public class ManagersInstaller : ScriptableObjectInstaller<ManagersInstaller>
         Container.BindInterfacesAndSelfTo<RankingService>().FromSubContainerResolve().ByMethod(InstallRankingManager).AsSingle();
         Container.BindInterfacesAndSelfTo<StatsService>().FromSubContainerResolve().ByMethod(InstallStatsManager).AsSingle();
         Container.BindInterfacesAndSelfTo<TerrainService>().FromSubContainerResolve().ByMethod(InstallTerrainManager).AsSingle();
+        Container.BindInterfacesAndSelfTo<FeaturesService>().FromSubContainerResolve().ByMethod(InstallFeaturesManager).AsSingle();
         Container.Bind<IMapService>().To<MapService>().AsSingle();
         Container.Bind<ISceneEventsService>().To<SceneEventsService>().AsSingle();
     }
@@ -50,5 +54,12 @@ public class ManagersInstaller : ScriptableObjectInstaller<ManagersInstaller>
     {
         subContainer.Bind<TerrainService>().AsSingle();
         subContainer.Bind<TerrainConfig>().FromInstance(m_TerrainConfig).AsSingle();
+    }
+
+    private void InstallFeaturesManager(DiContainer subContainer)
+    {
+        subContainer.Bind<IFeature>().To<BoosterModeFeature>().AsTransient();
+        subContainer.Bind<IFeature>().To<BrushSelectFeature>().AsTransient();
+        subContainer.Bind<FeaturesService>().AsSingle();
     }
 }
