@@ -73,10 +73,18 @@ public class MainMenuView : View<MainMenuView>
                 Transition(true);
                 break;
 
-            case GamePhase.LOADING:
+            case GamePhase.BRUSH_SELECT:
                 m_BrushGroundLight.SetActive(false);
 
                     m_BrushesPrefab.SetActive(false);
+
+                if (m_Visible)
+                    Transition(false);
+                break;
+            case GamePhase.LOADING:
+                m_BrushGroundLight.SetActive(false);
+
+                m_BrushesPrefab.SetActive(false);
 
                 if (m_Visible)
                     Transition(false);

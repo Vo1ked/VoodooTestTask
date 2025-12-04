@@ -14,24 +14,21 @@ namespace UI
         [SerializeField] private BrushSelectData m_BrushSelectData;
         [SerializeField] private BrushItem m_BrushItemPrefab;
         [SerializeField] private BrushItem m_SelectedSkinItem;
-        [SerializeField] public Transform gridContainer;
+        [SerializeField] private Transform gridContainer;
+        [SerializeField] private List<Image> m_Images = new List<Image>();
         [SerializeField] private Button m_BackButton;
         [SerializeField] private Shader m_StencilShader;
         private List<BrushItem> m_SkinItems = new List<BrushItem>();
-        
         private IStatsService m_StatsService;
-        private IFeaturesService m_FeaturesService;
 
         [Inject]
         public void Construct(IStatsService statsService, IFeaturesService featuresService)
         {
             m_StatsService = statsService;
-            m_FeaturesService = featuresService;
         }
         
-        protected override void Awake()
+        protected void Start()
         {
-            base.Awake();
             CreateGrid();
             var favoriteBrushId = Mathf.Min(m_StatsService.FavoriteBrush, m_BrushSelectData.Brushes.Count);
             var favoriteColorId = Mathf.Min(m_StatsService.FavoriteColor, m_BrushSelectData.Colors.Count);
@@ -62,6 +59,16 @@ namespace UI
         private void SetSelectedBrush(BrushItemData brushItem)
         {
              m_SelectedSkinItem.Initialize(brushItem, null);
+             foreach (var item in m_SkinItems)
+             {
+                 item.SetBackgroundColor(brushItem.Color);
+             }
+
+             foreach (var image in m_Images)
+             {
+                 image.color = brushItem.Color;
+             }
+             MainMenuView.Instance.SetTitleColor(brushItem.Color);
         }
 
         private void CreateGrid()

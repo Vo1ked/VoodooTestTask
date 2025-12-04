@@ -9,8 +9,9 @@ namespace UI
     {
         [SerializeField] private Button m_Button;
         [SerializeField] private Transform m_brushContainer;
+        [SerializeField] private Image m_backgroundImage;
         private BrushMenu m_BrushMenu;
-        [field: SerializeField] public BrushItemData m_BrushItemData { get; private set; }
+        [field: SerializeField] public BrushItemData BrushItemData { get; private set; }
     
 
         public void Initialize(BrushItemData brushItem, Action<BrushItemData> onClick)
@@ -19,12 +20,13 @@ namespace UI
             {
                 Destroy(m_BrushMenu.gameObject);
             }
-            m_BrushItemData = brushItem;
+            BrushItemData = brushItem;
 
             m_BrushMenu = Instantiate(brushItem.Brush, m_brushContainer);
             m_BrushMenu.SetNewColor(brushItem.Color);
+            SetBackgroundColor(brushItem.Color);
             m_Button.onClick.RemoveAllListeners();
-            m_Button.onClick.AddListener(() => onClick?.Invoke(m_BrushItemData));
+            m_Button.onClick.AddListener(() => onClick?.Invoke(BrushItemData));
         }
 
         public void Hide()
@@ -42,6 +44,11 @@ namespace UI
             if (m_BrushMenu == null)
                 return;
             m_BrushMenu.SetNewColor(color);
+        }
+
+        public void SetBackgroundColor(Color color)
+        {
+            m_backgroundImage.color = new Color(color.r, color.g, color.b,m_backgroundImage.color.a);
         }
     }
 }

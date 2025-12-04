@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Brush_4
   m_EditorClassIdentifier: 
   <BrushID>k__BackingField: 3
+  <Offset>k__BackingField: {x: 31, y: -100, z: -62}
   m_BrushPrefab: {fileID: 1428649729605940, guid: a124a4a5d1edf48288486f4fa17d85f5,
     type: 3}
   m_BrushMenuPrefab: {fileID: 1470955509019542, guid: 2f872ad270766403b82f878757e70cd9,
