@@ -901,6 +901,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainMenuView
       objectReference: {fileID: 0}
+    - target: {fileID: 1879199141287384, guid: ade9dc1200e32bb45ad4a7d1f3cda793, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224377474026299956, guid: ade9dc1200e32bb45ad4a7d1f3cda793,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -2664,9 +2668,19 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1393614798}
     m_Modifications:
+    - target: {fileID: 363040542849386109, guid: 19aa10d9c212f17418d7f9cb68b342d9,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 706088868900932859, guid: 19aa10d9c212f17418d7f9cb68b342d9,
         type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1005887747202925068, guid: 19aa10d9c212f17418d7f9cb68b342d9,
+        type: 3}
+      propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1072624945348460504, guid: 19aa10d9c212f17418d7f9cb68b342d9,
@@ -2773,6 +2787,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrushListSelect
+      objectReference: {fileID: 0}
+    - target: {fileID: 2203836869499972544, guid: 19aa10d9c212f17418d7f9cb68b342d9,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9134089198097851588, guid: 19aa10d9c212f17418d7f9cb68b342d9,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
