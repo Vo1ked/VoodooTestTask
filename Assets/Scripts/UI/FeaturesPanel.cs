@@ -7,6 +7,7 @@ namespace UI
     public class FeaturesPanel :  View<FeaturesPanel>
     {
         [SerializeField] private FeatureToggle m_TogglePrefab;
+        [SerializeField] private Transform m_Container;
         
         private IFeaturesService m_FeaturesService;
 
@@ -23,7 +24,7 @@ namespace UI
             base.Awake();
             foreach (var feature in m_FeaturesService.GetFeatures())
             {
-                var toggle = Instantiate(m_TogglePrefab, transform);
+                var toggle = Instantiate(m_TogglePrefab, m_Container);
                 toggle.Initialize(feature.Name,feature.State,ChangeState);
             }
         }
