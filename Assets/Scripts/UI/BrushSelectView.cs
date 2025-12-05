@@ -30,12 +30,14 @@ namespace UI
         protected void Start()
         {
             CreateGrid();
-            var favoriteBrushId = Mathf.Min(m_StatsService.FavoriteBrush, m_BrushSelectData.Brushes.Count);
-            var favoriteColorId = Mathf.Min(m_StatsService.FavoriteColor, m_BrushSelectData.Colors.Count);
+            var favoriteBrush = m_BrushSelectData.Brushes.TryGetValue(m_StatsService.FavoriteBrush, out var favoriteBrushTemp) 
+                ? favoriteBrushTemp : m_BrushSelectData.Brushes.Values.First();
+            var favoriteColor = m_BrushSelectData.Colors.TryGetValue(m_StatsService.FavoriteColor, out var favoriteColorTemp) 
+                ? favoriteColorTemp : m_BrushSelectData.Colors.Values.First();
             ChangeSkin(new BrushItemData(
-                m_BrushSelectData.Brushes.First(x=> x.BrushID == favoriteBrushId).m_BrushMenuPrefab.GetComponent<BrushMenu>(),
-                m_BrushSelectData.Colors.First(x => x.ColorId == favoriteColorId).m_Colors[0],
-                favoriteBrushId, favoriteColorId
+                favoriteBrush.m_BrushMenuPrefab.GetComponent<BrushMenu>(),
+                favoriteColor.m_Colors[0],
+                favoriteBrush.BrushID, favoriteColor.ColorId
             ));
             m_BackButton.onClick.AddListener(()=> GameService.ChangePhase(GamePhase.MAIN_MENU));
             m_SkinItems.ForEach(x=>x.Hide());
@@ -50,7 +52,7 @@ namespace UI
         public void Disable()
         {
             MainMenuView.Instance.RemoveBrushButton();
-            if (GameService.currentPhase == GamePhase.BRUSH_SELECT)
+            if (GameService?.currentPhase == GamePhase.BRUSH_SELECT)
             {
                 GameService.ChangePhase(GamePhase.MAIN_MENU);
             }
@@ -73,9 +75,9 @@ namespace UI
 
         private void CreateGrid()
         {
-            foreach (var brushData in m_BrushSelectData.Brushes)
+            foreach (var brushData in m_BrushSelectData.Brushes.Values)
             {
-                foreach (var colorData in m_BrushSelectData.Colors)
+                foreach (var colorData in m_BrushSelectData.Colors.Values)
                 {
                     var brushMenu = brushData.m_BrushMenuPrefab.GetComponent<BrushMenu>();
                     var brushVariant = Instantiate(m_BrushItemPrefab, gridContainer);
@@ -103,7 +105,7 @@ namespace UI
 
         private void ChangeSkin(BrushItemData selectedBrush)
         {
-            m_StatsService.FavoriteSkin = selectedBrush.BrushId;
+            m_StatsService.FavoriteBrush = selectedBrush.BrushId;
             m_StatsService.FavoriteColor = selectedBrush.ColorId;
             GameService.SetColor(selectedBrush.ColorId);
             SetSelectedBrush(selectedBrush);

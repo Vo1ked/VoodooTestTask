@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+using Interfaces.Services;
 using Zenject;
 using Random = UnityEngine.Random;
 
@@ -68,6 +70,7 @@ public class GameService : IGameService
     private float m_PowerUpRate;
     private Vector3 m_SpotlightOffset;
 
+    private ColorData[] m_ColorsData;
     // Buffers
     private Vector3 m_PosBuffer;
 
@@ -84,16 +87,18 @@ public class GameService : IGameService
     private GameConfig m_GameConfig;
     private DiContainer m_Container;
     private ISceneEventsService m_SceneEventsService;
+    private IFeaturesService m_FeaturesService;
     
     [Inject]
     public void Construct(GameConfig gameConfig, IStatsService statsService, IBattleRoyaleService battleRoyaleService,
-        ITerrainService terrainService, DiContainer container, ISceneEventsService sceneEventsService)
+        ITerrainService terrainService, DiContainer container, ISceneEventsService sceneEventsService,IFeaturesService featuresService)
     {
         m_GameConfig = gameConfig;
         m_StatsService = statsService;
         m_BattleRoyaleService = battleRoyaleService;
         m_TerrainService = terrainService;
         m_Container = container;
+        m_FeaturesService = featuresService;
         m_PlayerSkinID = 1;
         m_Players = new List<Player>();
         m_Objects = new List<GameObject>();
@@ -120,11 +125,10 @@ public class GameService : IGameService
         m_Brushs = new List<BrushData>(Resources.LoadAll<BrushData>("Brushs"));
         m_Skins = new List<SkinData>(Resources.LoadAll<SkinData>("Skins"));
 
-        List<ColorData> colorsData = new List<ColorData>(Resources.LoadAll<ColorData>("Colors"));
+        m_ColorsData = Resources.LoadAll<ColorData>("Colors");
         m_Colors = new List<Color>();
-        for (int i = 0; i < colorsData.Count; ++i)
+        foreach (var colorData in m_ColorsData)
         {
-            ColorData colorData = colorsData[i];
             m_Colors.Add(colorData.m_Colors[0]);
         }
 
@@ -190,6 +194,11 @@ public class GameService : IGameService
     {
         colorIndex = Mathf.Min(m_Colors.Count - 1, colorIndex);
         Color humanColor = m_Colors[colorIndex];
+        var favoriteColor = m_ColorsData.FirstOrDefault(x => x.ColorId == m_StatsService.FavoriteColor);
+        if (m_FeaturesService.GetFeatureState(Feature.BrushSelect) && favoriteColor != null)
+        {
+            humanColor = favoriteColor.m_Colors[0];
+        }
         RVEndView.Instance.SetTitleColor(humanColor);
         m_MainMenuView.SetTitleColor(humanColor);
         LoadingView.Instance.SetTitleColor(humanColor);
@@ -285,7 +294,14 @@ public class GameService : IGameService
     {
         int favoriteSkin = Mathf.Min(m_StatsService.FavoriteSkin, m_Skins.Count - 1);
         Color favoriteColor = m_Skins[favoriteSkin].Color.m_Colors[0];
-
+        if (m_FeaturesService.GetFeatureState(Feature.BrushSelect) && _Human)
+        {
+            var favoriteSkinColor = m_ColorsData.FirstOrDefault(x => x.ColorId == m_StatsService.FavoriteColor);
+            if (favoriteSkinColor != null)
+            {
+                favoriteColor = favoriteSkinColor.m_Colors[0];
+            }
+        }
         int favoriteColorIndex = 0;
         for (int i = 0; i < m_Colors.Count; i++)
         {
@@ -312,6 +328,10 @@ public class GameService : IGameService
 
         int favoriteSkin = Mathf.Min(m_StatsService.FavoriteSkin, m_Skins.Count - 1);
         int selectedBrush = SkinToBrush(m_Skins[favoriteSkin]);
+        if (m_FeaturesService.GetFeatureState(Feature.BrushSelect))
+        {
+            selectedBrush = m_Brushs.FindIndex(x => x.BrushID == m_StatsService.FavoriteBrush);
+        }
         return selectedBrush;
     }
 
