@@ -7,12 +7,15 @@ public interface IStatsService
     void SetLastXP(int xp);
     void GainXP();
     int FavoriteSkin { get; set; }
-    int FavoriteBrush { get; set; }
-    int FavoriteColor { get; set; }
     int m_LastGain { get; set; }
     int GetXP();
     int GetPlayerLevel();
     int XPToNextLevel(int currentLevel);
     string GetNickname();
     void SetNickname(string name);
+    
+    int FavoriteBrush { get; set; }
+    int FavoriteColor { get; set; }
+    int CurrentBoosterLevel { get;}
+    void IncreaseBoostGameLevel();
 }

@@ -83,6 +83,7 @@ public class GameService : IGameService
     private List<GameObject> m_Objects; // Powerups and other map objects
     private List<Player> m_OrderedPlayers;
     private Transform m_HumanSpotlight;
+    private int m_FavoritePlayerColorIndex;
 
     private GameConfig m_GameConfig;
     private DiContainer m_Container;
@@ -174,7 +175,6 @@ public class GameService : IGameService
         m_MainMenuView = MainMenuView.Instance;
         m_HumanSpotlight = GameObject.Instantiate<Transform>(m_GameConfig.m_HumanSpotlight);
         m_SpotlightOffset = m_HumanSpotlight.position;
-
         // Buffers
         m_Objects = new List<GameObject>();
         m_PosBuffer = Vector3.zero;
@@ -192,6 +192,8 @@ public class GameService : IGameService
 
     public void SetColor(int colorIndex)
     {
+        m_FavoritePlayerColorIndex = colorIndex;
+            
         colorIndex = Mathf.Min(m_Colors.Count - 1, colorIndex);
         Color humanColor = m_Colors[colorIndex];
         var favoriteColor = m_ColorsData.FirstOrDefault(x => x.ColorId == m_StatsService.FavoriteColor);
@@ -294,32 +296,22 @@ public class GameService : IGameService
     {
         int favoriteSkin = Mathf.Min(m_StatsService.FavoriteSkin, m_Skins.Count - 1);
         Color favoriteColor = m_Skins[favoriteSkin].Color.m_Colors[0];
-        if (m_FeaturesService.GetFeatureState(Feature.BrushSelect) && _Human)
+        if (m_FeaturesService.GetFeatureState(Feature.BrushSelect))
         {
-            var favoriteSkinColor = m_ColorsData.FirstOrDefault(x => x.ColorId == m_StatsService.FavoriteColor);
-            if (favoriteSkinColor != null)
+            var favoriteColorData = m_ColorsData.FirstOrDefault(x => x.ColorId == m_StatsService.FavoriteColor);
+            if (favoriteColorData != null)
             {
-                favoriteColor = favoriteSkinColor.m_Colors[0];
+                favoriteColor = favoriteColorData.m_Colors[0];
             }
         }
-        int favoriteColorIndex = 0;
-        for (int i = 0; i < m_Colors.Count; i++)
-        {
-            if (favoriteColor == m_Colors[i])
-            {
-                favoriteColorIndex = i;
-                break;
-            }
-        }
+        int favoriteColorIndex = m_Colors.IndexOf(favoriteColor);
 
         if (_Human)
             return favoriteColorIndex;
 
-        if (favoriteColorIndex <= _Index)
-            return _Index + 1;
-        else
-            return _Index;
+        return (m_Colors.Count + favoriteColorIndex + 1 + _Index) % m_Colors.Count;
     }
+    
 
     public int ComputeCurrentPlayeBrushIndex(bool _Human, int _Index)
     {
@@ -340,7 +332,7 @@ public class GameService : IGameService
         GameObject playerGo = null;
         Player player = null;
 
-        playerGo = m_Container.InstantiatePrefab((_Human == true) ? m_HumanPlayer : m_IAPlayer, _Position, Quaternion.identity, null) as GameObject;
+        playerGo = m_Container.InstantiatePrefab(_Human ? m_HumanPlayer : m_IAPlayer, _Position, Quaternion.identity, null);
         player = playerGo.GetComponent<Player>();
 
 #if UNITY_EDITOR
@@ -398,13 +390,13 @@ public class GameService : IGameService
         if (Time.time - m_LastBrushTime > c_BrushRate)
         {
             m_LastBrushTime = Time.time;
-            PopObjectRandomly(m_BrushPowerUpPrefab.gameObject);
+            PopObjectRandomly(m_BrushPowerUpPrefab);
         }
 
         m_HumanSpotlight.position = m_HumanPlayerTr.position + m_SpotlightOffset;
     }
 
-    public void PopObjectRandomly(GameObject _Prefab)
+    public void PopObjectRandomly(PowerUp _Prefab)
     {
         m_PosBuffer.Set(Random.Range(-m_TerrainService.WorldHalfWidth + c_PowerUpPadding, m_TerrainService.WorldHalfWidth - c_PowerUpPadding),
                              0.0f,
@@ -429,7 +421,7 @@ public class GameService : IGameService
         return m_Brushs[PickBrushID()].m_BrushPrefab;
     }
 
-    public GameObject PickPowerUp()
+    public PowerUp PickPowerUp()
     {
         return m_PowerUps[Random.Range(0, m_PowerUps.Count)].m_Prefab;
     }

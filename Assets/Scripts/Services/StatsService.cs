@@ -25,6 +25,13 @@ public class StatsService : IStatsService
 		get => PlayerPrefs.GetInt("FavoriteColor", 0);
 		set => PlayerPrefs.SetInt("FavoriteColor", value);
 	}
+
+	public int CurrentBoosterLevel
+	{
+		get => PlayerPrefs.GetInt("CurrentBoosterLevel", 0);
+		private set => PlayerPrefs.SetInt("CurrentBoosterLevel", value);
+	}
+	
     private StatsConfig m_StatsConfig;
     
     [Inject]
@@ -141,6 +148,11 @@ public class StatsService : IStatsService
 		int currentLevel = _LevelStart == -1 ? GetPlayerLevel() - 1 : _LevelStart;
 		int index = Mathf.Min(currentLevel, m_XPForLevel.Count - 1);
 		return (m_XPForLevel[index]);
+	}
+
+	public void IncreaseBoostGameLevel()
+	{
+		CurrentBoosterLevel++;
 	}
 
 	#region IAs

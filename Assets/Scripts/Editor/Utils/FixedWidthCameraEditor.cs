@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 
 [CustomEditor(typeof(FixedWidthCamera))]
-public class FixedWidthCameraEditor : Editor
+public class FixedWidthCameraEditor : UnityEditor.Editor
 {
     private FixedWidthCamera m_Target;
 

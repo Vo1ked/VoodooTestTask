@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BrushesSelect
   m_EditorClassIdentifier: 
   m_BrushesData:
-  - {fileID: 11400000, guid: e848f987341224b059f1a00b0f2e53c3, type: 2}
-  - {fileID: 11400000, guid: efeaa1ffb6e62475c9e04a0b60b7755e, type: 2}
+  - {fileID: 11400000, guid: efaa8eb864ea14a4a9a7aaa18bc2d273, type: 2}
+  - {fileID: 11400000, guid: 2b3c29ee5da344d9b894c981f53e2487, type: 2}
   m_ColorsData:
   - {fileID: 11400000, guid: d6f1278e4175a4fdb80032d4f8463861, type: 2}
   - {fileID: 11400000, guid: f8a73bf7ef08540478d7e2d0702e0742, type: 2}
