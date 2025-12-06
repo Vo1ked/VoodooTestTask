@@ -31,8 +31,12 @@ public class StatsService : IStatsService
 		get => PlayerPrefs.GetInt("CurrentBoosterLevel", 0);
 		private set => PlayerPrefs.SetInt("CurrentBoosterLevel", value);
 	}
-	
-    private StatsConfig m_StatsConfig;
+
+	public int RealCurrentBoosterLevel 	{
+		get => PlayerPrefs.GetInt("RealCurrentBoosterLevel", 0);
+		set => PlayerPrefs.SetInt("RealCurrentBoosterLevel", value);
+	}
+	private StatsConfig m_StatsConfig;
     
     [Inject]
     public void Construct(StatsConfig statsConfig)

@@ -13,7 +13,7 @@ namespace Gameplay.Data
         /// </summary>
         [SerializeField] private PowerUpData[] m_BasePowerUps = Array.Empty<PowerUpData>();
         [SerializeField] private BoosterLevel[] m_boosterLevels = Array.Empty<BoosterLevel>();
-        public Dictionary<int, BoosterLevel> GetBoosterLevels => m_boosterLevels.ToDictionary(x => x.Id);
+        public Dictionary<int, BoosterLevel> BoosterLevels => m_boosterLevels.ToDictionary(x => x.Id);
     }
 
     [Serializable]

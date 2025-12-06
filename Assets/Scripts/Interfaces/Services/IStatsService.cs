@@ -17,5 +17,6 @@ public interface IStatsService
     int FavoriteBrush { get; set; }
     int FavoriteColor { get; set; }
     int CurrentBoosterLevel { get;}
+    int RealCurrentBoosterLevel { get; set;}
     void IncreaseBoostGameLevel();
 }

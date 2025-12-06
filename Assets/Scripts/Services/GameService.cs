@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Gameplay.Features;
 using Interfaces.Services;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -47,6 +48,9 @@ public class GameService : IGameService
 
     public int m_PlayerSkinID { get; set; }
 
+    public bool m_BoosterMode { get; set; }
+
+
     public GamePhase currentPhase { get; private set; }
     public List<Player> m_Players { get; set; }
     public List<int> m_XPByRank => m_GameConfig.m_XPByRank;
@@ -79,6 +83,7 @@ public class GameService : IGameService
     private List<Color> m_Colors;
     private List<Vector3> m_PopPoints;
     private List<PowerUpData> m_PowerUps;
+    private List<PowerUpData> m_BaseGamePowerUps;
     private PlayerNameData m_PlayerNameData;
     private List<GameObject> m_Objects; // Powerups and other map objects
     private List<Player> m_OrderedPlayers;
@@ -89,7 +94,7 @@ public class GameService : IGameService
     private DiContainer m_Container;
     private ISceneEventsService m_SceneEventsService;
     private IFeaturesService m_FeaturesService;
-    
+
     [Inject]
     public void Construct(GameConfig gameConfig, IStatsService statsService, IBattleRoyaleService battleRoyaleService,
         ITerrainService terrainService, DiContainer container, ISceneEventsService sceneEventsService,IFeaturesService featuresService)
@@ -134,8 +139,8 @@ public class GameService : IGameService
         }
 
         m_PlayerNameData = Resources.Load<PlayerNameData>("PlayerNames");
-
-        m_PowerUps = new List<PowerUpData>(Resources.LoadAll<PowerUpData>("PowerUps"));
+        m_BaseGamePowerUps = new List<PowerUpData>(Resources.LoadAll<PowerUpData>("PowerUps"));
+        
     }
 
     private void OnAwake()
@@ -219,6 +224,16 @@ public class GameService : IGameService
                 m_LastBrushTime = Time.time;
                 m_LastPowerUpTime = Time.time;
                 m_PowerUpRate = Random.Range(c_MinPowerUpRate, c_MaxPowerUpRate);
+                if (m_FeaturesService.GetFeatureState(Feature.BoosterPlayMode) && m_BoosterMode)
+                {
+                    BoosterModeFeature booster =
+                        (BoosterModeFeature)m_FeaturesService.GetFeature(Feature.BoosterPlayMode);
+                    m_PowerUps = booster.GetPowerUps().ToList();
+                }
+                else
+                {
+                    m_PowerUps = m_BaseGamePowerUps;
+                }
                 m_Level = m_StatsService.GetLevel();
                 PopPlayers();
 
@@ -245,7 +260,11 @@ public class GameService : IGameService
                     rankingScore = 1;
                 else if (playerRank >= 2) // Second or third, then stay at same difficulty
                     rankingScore = 0;
-
+                if (m_BoosterMode)
+                {
+                    var boosterFeature = (BoosterModeFeature)m_FeaturesService.GetFeature(Feature.BoosterPlayMode);
+                    boosterFeature.IncreaseBoosterLevel();
+                }
                 m_StatsService.AddGameResult(rankingScore);
                 int xp = m_XPByRank[playerRank];
                 m_StatsService.SetLastXP(xp);

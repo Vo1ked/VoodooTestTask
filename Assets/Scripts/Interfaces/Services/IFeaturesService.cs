@@ -7,6 +7,7 @@ namespace Interfaces.Services
         public IReadOnlyList<IFeature> GetFeatures();
         public void ChangeFeatureState(Feature feature, bool state);
         public bool GetFeatureState(Feature feature);
+        public IFeature GetFeature(Feature feature);
     }
 
     public enum Feature

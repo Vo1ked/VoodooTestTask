@@ -8,6 +8,7 @@ public interface IGameService
     event Action onEndGame;
     event Action onScoresCalculated;
     bool m_IsPlaying { get; set; }
+    bool m_BoosterMode { get; set; }
     GamePhase currentPhase { get; }
     int m_PlayerSkinID { get; set; }
     List<SkinData> m_Skins { get; set; }

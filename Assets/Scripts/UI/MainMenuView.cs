@@ -50,6 +50,7 @@ public class MainMenuView : View<MainMenuView>
     public void AddBrushButton(UnityAction brushAction)
     {
         m_BrushSelectButton.gameObject.SetActive(true);
+        m_BrushSelectButton.onClick.RemoveAllListeners();
         m_BrushSelectButton.onClick.AddListener(brushAction);
         m_BrushSelect.SetActive(false);
     }

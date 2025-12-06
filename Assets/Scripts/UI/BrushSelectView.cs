@@ -20,6 +20,7 @@ namespace UI
         [SerializeField] private Shader m_StencilShader;
         private List<BrushItem> m_SkinItems = new List<BrushItem>();
         private IStatsService m_StatsService;
+        private bool m_BrushSelect;
 
         [Inject]
         public void Construct(IStatsService statsService, IFeaturesService featuresService)
@@ -114,19 +115,19 @@ namespace UI
         protected override void OnGamePhaseChanged(GamePhase gamePhase)
         {
             base.OnGamePhaseChanged(gamePhase);
-            if (gamePhase == GamePhase.BRUSH_SELECT)
+            switch (gamePhase)
             {
-                Transition(true);
-                m_SkinItems.ForEach(x=>x.Show());
-                m_SelectedSkinItem.Show();
-                return;
-            }
-
-            if (gamePhase == GamePhase.MAIN_MENU && m_Visible)
-            {
-                Transition(false);
-                m_SkinItems.ForEach(x=>x.Hide());
-                m_SelectedSkinItem.Hide();
+                case GamePhase.BRUSH_SELECT:
+                    Transition(true);
+                    m_SkinItems.ForEach(x => x.Show());
+                    m_SelectedSkinItem.Show();
+                    return;
+                case GamePhase.MAIN_MENU when m_BrushSelect:
+                    Enable();
+                    break;
+                case GamePhase.MAIN_MENU:
+                    Disable();
+                    break;
             }
         }
 

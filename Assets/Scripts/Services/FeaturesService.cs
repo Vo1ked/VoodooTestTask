@@ -9,6 +9,7 @@ namespace Services
     public class FeaturesService : IFeaturesService
     {
         private readonly Dictionary<Feature,IFeature> m_Features;
+
         public FeaturesService(IEnumerable<IFeature> features)
         {
             m_Features = new Dictionary<Feature, IFeature>();
@@ -45,6 +46,12 @@ namespace Services
 
         public bool GetFeatureState(Feature feature) =>
             m_Features.TryGetValue(feature, out IFeature featureObj) && featureObj.State;
+
+        public IFeature GetFeature(Feature feature)
+        {
+            return m_Features.GetValueOrDefault(feature);
+        }
+
         public IReadOnlyList<IFeature> GetFeatures() => m_Features.Values.ToList();
         private void SaveFeature(Feature feature,bool state)
         {

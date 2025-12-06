@@ -1,3 +1,4 @@
+using Gameplay.Data;
 using Gameplay.Features;
 using Interfaces;
 using Services;
@@ -12,6 +13,7 @@ public class ManagersInstaller : ScriptableObjectInstaller<ManagersInstaller>
     [SerializeField] private RankingConfig m_RankingConfig;
     [SerializeField] private StatsConfig m_StatsConfig;
     [SerializeField] private TerrainConfig m_TerrainConfig;
+    [SerializeField] private BoosterLevelsConfig m_BoosterLevelsConfig;
 
     
     public override void InstallBindings()
@@ -58,6 +60,7 @@ public class ManagersInstaller : ScriptableObjectInstaller<ManagersInstaller>
 
     private void InstallFeaturesManager(DiContainer subContainer)
     {
+        subContainer.Bind<BoosterLevelsConfig>().FromInstance(m_BoosterLevelsConfig).AsSingle();
         subContainer.Bind<IFeature>().To<BoosterModeFeature>().AsTransient();
         subContainer.Bind<IFeature>().To<BrushSelectFeature>().AsTransient();
         subContainer.Bind<FeaturesService>().AsSingle();
