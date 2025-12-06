@@ -1,5 +1,6 @@
 ﻿using Interfaces;
 using Interfaces.Services;
+using UI;
 
 namespace Gameplay.Features
 {
@@ -11,11 +12,13 @@ namespace Gameplay.Features
         public void Enable()
         {
             m_State = true;
+            BoosterModeButton.Instance.Enable();
         }
 
         public void Disable()
         {
             m_State = false;
+            BoosterModeButton.Instance.Disable();
         }
     }
 }

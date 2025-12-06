@@ -29,6 +29,16 @@ namespace UI
             }
         }
 
+        protected override void OnGamePhaseChanged(GamePhase _GamePhase)
+        {
+            if (_GamePhase is GamePhase.MAIN_MENU or GamePhase.BRUSH_SELECT )
+            {
+                return;
+            }
+            
+            Transition(false);
+        }
+
         private void ChangeState(Feature feature, bool state)
         {
             m_FeaturesService.ChangeFeatureState(feature, state);

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -54,7 +53,6 @@ public class MainMenuView : View<MainMenuView>
         m_BrushSelectButton.onClick.AddListener(brushAction);
         m_BrushSelect.SetActive(false);
     }
-    
     public void RemoveBrushButton()
     {
         m_BrushSelectButton.gameObject.SetActive(false);
