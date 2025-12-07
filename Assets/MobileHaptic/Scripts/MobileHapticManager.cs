@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_IOS
 using UnityEngine.iOS;
-//#else if UNITY_ANDROID
-//using UnityEngine.and
+#elif UNITY_ANDROID
+using UnityEngine.Android;
 #endif
 
 public class MobileHapticManager : MonoBehaviour {
@@ -64,7 +64,7 @@ public class MobileHapticManager : MonoBehaviour {
 
 		//iOSHapticFeedback.Instance.Trigger
 #elif UNITY_ANDROID
-			AndroidVibration.Vibrate(androidForces[type]);
+			//AndroidVibration.Vibrate(androidForces[type]);
 #endif
 
 
