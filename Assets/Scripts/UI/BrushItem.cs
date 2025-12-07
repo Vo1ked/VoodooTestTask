@@ -31,12 +31,12 @@ namespace UI
 
         public void Hide()
         {
-            m_BrushMenu.gameObject.SetActive(false);
+            m_BrushMenu?.gameObject.SetActive(false);
         }
 
         public void Show()
         {
-            m_BrushMenu.gameObject.SetActive(true);
+            m_BrushMenu?.gameObject.SetActive(true);
         }
 
         public void ChangeBrushColor(Color color)

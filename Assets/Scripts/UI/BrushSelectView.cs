@@ -124,15 +124,15 @@ namespace UI
                     m_SelectedSkinItem.Show();
                     return;
                 case GamePhase.MAIN_MENU when m_FeaturesService.GetFeatureState(Feature.BrushSelect):
-                    Transition(false);
                     m_SkinItems.ForEach(x=>x.Hide());
                     m_SelectedSkinItem.Hide();
                     Enable();
+                    Transition(false);
                     break;
                 case GamePhase.MAIN_MENU:
-                    Transition(false);
                     m_SkinItems.ForEach(x=>x.Hide());
                     m_SelectedSkinItem.Hide();
+                    Transition(false);
                     Disable();
                     break;
             }
