@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -54,7 +55,6 @@ public abstract class Player : MappedObject, IDrawLine
 	protected Vector3			m_Direction;
 	private Coroutine 			m_GrowCoroutine;
 	protected List<GameObject>	m_SearchBuffer;
-	private Coroutine           m_SpeedPowerUpCoroutine;
 	private Coroutine           m_SizePowerUpCoroutine;
 
 	// Runtime
@@ -66,6 +66,8 @@ public abstract class Player : MappedObject, IDrawLine
 	private int 				m_GrowStep = 0;
 	private float 				m_Size = c_MinSize;
 	protected float				m_Speed = c_MinSpeed;
+	protected int 				m_GrowStepId = 0;
+	protected Dictionary<int,float> m_SpeedMultipliers = new Dictionary<int,float>();
     public bool                 m_Invincible { get; private set; }
     private float               m_SizeSecondaryBrush;
     protected int               m_Level;
@@ -470,7 +472,15 @@ public abstract class Player : MappedObject, IDrawLine
 
 	protected float GetSpeed()
 	{
-		return Mathf.Clamp(m_Speed, c_MinSpeed, c_MaxSpeed);
+		var currentSpeed = m_Speed;
+		if (m_SpeedMultipliers.Count > 0)
+		{
+			foreach (var multiplier in m_SpeedMultipliers.Values){
+			{
+				currentSpeed += multiplier;
+			}}
+		}
+		return Mathf.Clamp(currentSpeed, c_MinSpeed, c_MaxSpeed);
 	}
 
 	public float GetSize()
@@ -505,6 +515,20 @@ public abstract class Player : MappedObject, IDrawLine
 		if (m_SizePowerUpCoroutine != null)
 			StopCoroutine(m_SizePowerUpCoroutine);
 		m_SizePowerUpCoroutine = StartCoroutine (BonusCoroutine(EBonus.SIZE_UP, _Duration));
+	}
+
+	public virtual async void AddSpeedUp(float Speed,float _Duration, AnimationCurve _Curve)
+	{
+		var durationLeft = _Duration;
+		var growSpeedId = ++m_GrowStepId;
+		m_SpeedMultipliers.Add(growSpeedId, _Curve.Evaluate(0));
+		while (durationLeft > 0)
+		{
+			durationLeft -= Time.fixedDeltaTime;
+			m_SpeedMultipliers[growSpeedId] = Speed * _Curve.Evaluate(1f -(durationLeft / _Duration));
+			await Task.Delay(Mathf.CeilToInt(Time.fixedDeltaTime * 1000));
+		}
+		m_SpeedMultipliers.Remove(growSpeedId);
 	}
 
 	#endregion   
