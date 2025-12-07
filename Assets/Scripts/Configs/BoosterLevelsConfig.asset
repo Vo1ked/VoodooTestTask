@@ -15,20 +15,60 @@ MonoBehaviour:
   m_BasePowerUps:
   - {fileID: 11400000, guid: d0b76c6fa360548088faf3b80e72a6d7, type: 2}
   - {fileID: 11400000, guid: 707909f05d8274438a62b7a0fec4fa9b, type: 2}
+  - {fileID: 11400000, guid: 2dab80e7a5c0ca14ea656a03bfd86132, type: 2}
   m_boosterLevels:
   - m_Id: 0
     m_PowerUps:
     - {fileID: 11400000, guid: d0b76c6fa360548088faf3b80e72a6d7, type: 2}
     - {fileID: 11400000, guid: 707909f05d8274438a62b7a0fec4fa9b, type: 2}
+    - {fileID: 11400000, guid: 2dab80e7a5c0ca14ea656a03bfd86132, type: 2}
   - m_Id: 1
     m_PowerUps:
     - {fileID: 11400000, guid: d0b76c6fa360548088faf3b80e72a6d7, type: 2}
     - {fileID: 11400000, guid: 707909f05d8274438a62b7a0fec4fa9b, type: 2}
+    - {fileID: 11400000, guid: 2dab80e7a5c0ca14ea656a03bfd86132, type: 2}
   - m_Id: 2
     m_PowerUps:
     - {fileID: 11400000, guid: d0b76c6fa360548088faf3b80e72a6d7, type: 2}
     - {fileID: 11400000, guid: 707909f05d8274438a62b7a0fec4fa9b, type: 2}
+    - {fileID: 11400000, guid: 2dab80e7a5c0ca14ea656a03bfd86132, type: 2}
   - m_Id: 3
     m_PowerUps:
     - {fileID: 11400000, guid: d0b76c6fa360548088faf3b80e72a6d7, type: 2}
     - {fileID: 11400000, guid: 707909f05d8274438a62b7a0fec4fa9b, type: 2}
+    - {fileID: 11400000, guid: 2dab80e7a5c0ca14ea656a03bfd86132, type: 2}
+  - m_Id: 4
+    m_PowerUps:
+    - {fileID: 11400000, guid: d0b76c6fa360548088faf3b80e72a6d7, type: 2}
+    - {fileID: 11400000, guid: 707909f05d8274438a62b7a0fec4fa9b, type: 2}
+    - {fileID: 11400000, guid: 2dab80e7a5c0ca14ea656a03bfd86132, type: 2}
+  - m_Id: 5
+    m_PowerUps:
+    - {fileID: 11400000, guid: d0b76c6fa360548088faf3b80e72a6d7, type: 2}
+    - {fileID: 11400000, guid: 707909f05d8274438a62b7a0fec4fa9b, type: 2}
+    - {fileID: 11400000, guid: 2dab80e7a5c0ca14ea656a03bfd86132, type: 2}
+  - m_Id: 6
+    m_PowerUps:
+    - {fileID: 11400000, guid: d0b76c6fa360548088faf3b80e72a6d7, type: 2}
+    - {fileID: 11400000, guid: 707909f05d8274438a62b7a0fec4fa9b, type: 2}
+    - {fileID: 11400000, guid: 2dab80e7a5c0ca14ea656a03bfd86132, type: 2}
+  - m_Id: 7
+    m_PowerUps:
+    - {fileID: 11400000, guid: d0b76c6fa360548088faf3b80e72a6d7, type: 2}
+    - {fileID: 11400000, guid: 707909f05d8274438a62b7a0fec4fa9b, type: 2}
+    - {fileID: 11400000, guid: 2dab80e7a5c0ca14ea656a03bfd86132, type: 2}
+  - m_Id: 8
+    m_PowerUps:
+    - {fileID: 11400000, guid: d0b76c6fa360548088faf3b80e72a6d7, type: 2}
+    - {fileID: 11400000, guid: 707909f05d8274438a62b7a0fec4fa9b, type: 2}
+    - {fileID: 11400000, guid: 2dab80e7a5c0ca14ea656a03bfd86132, type: 2}
+  - m_Id: 9
+    m_PowerUps:
+    - {fileID: 11400000, guid: d0b76c6fa360548088faf3b80e72a6d7, type: 2}
+    - {fileID: 11400000, guid: 707909f05d8274438a62b7a0fec4fa9b, type: 2}
+    - {fileID: 11400000, guid: 2dab80e7a5c0ca14ea656a03bfd86132, type: 2}
+  - m_Id: 10
+    m_PowerUps:
+    - {fileID: 11400000, guid: d0b76c6fa360548088faf3b80e72a6d7, type: 2}
+    - {fileID: 11400000, guid: 707909f05d8274438a62b7a0fec4fa9b, type: 2}
+    - {fileID: 11400000, guid: 2dab80e7a5c0ca14ea656a03bfd86132, type: 2}

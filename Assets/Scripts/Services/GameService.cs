@@ -417,9 +417,15 @@ public class GameService : IGameService
 
     public void PopObjectRandomly(PowerUp _Prefab)
     {
+        GetRandomPosition();
+        m_Objects.Add(m_Container.InstantiatePrefab(_Prefab, m_PosBuffer, Quaternion.identity, null));
+    }
+
+    public Vector3 GetRandomPosition()
+    {
         m_PosBuffer.Set(Random.Range(-m_TerrainService.WorldHalfWidth + c_PowerUpPadding, m_TerrainService.WorldHalfWidth - c_PowerUpPadding),
-                             0.0f,
-                        Random.Range(-m_TerrainService.WorldHalfHeight + c_PowerUpPadding, m_TerrainService.WorldHalfHeight - c_PowerUpPadding));
+            0.0f,
+            Random.Range(-m_TerrainService.WorldHalfHeight + c_PowerUpPadding, m_TerrainService.WorldHalfHeight - c_PowerUpPadding));
 
         if (Mathf.Abs(m_PosBuffer.x) < c_PowerUpPadding)
             m_PosBuffer.x += c_PowerUpPadding * Mathf.Sign(m_PosBuffer.x);
@@ -427,7 +433,7 @@ public class GameService : IGameService
             m_PosBuffer.z += c_PowerUpPadding * Mathf.Sign(m_PosBuffer.z);
 
         m_TerrainService.ClampPosition(ref m_PosBuffer, Constants.c_SpawnBorderOffset);
-        m_Objects.Add(m_Container.InstantiatePrefab(_Prefab, m_PosBuffer, Quaternion.identity, null));
+        return m_PosBuffer;
     }
 
     public int PickBrushID()
