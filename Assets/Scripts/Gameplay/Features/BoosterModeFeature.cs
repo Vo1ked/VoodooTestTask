@@ -37,12 +37,13 @@ namespace Gameplay.Features
         {
             m_Stats.IncreaseBoostGameLevel();
             m_Stats.RealCurrentBoosterLevel = m_Stats.CurrentBoosterLevel;
-            if (m_Stats.CurrentBoosterLevel > m_Config.BoosterLevels.Count)
+            if (m_Stats.CurrentBoosterLevel >= m_Config.BoosterLevels.Count)
             {
                 m_Stats.RealCurrentBoosterLevel = Random.Range(0, m_Config.BoosterLevels.Count);
             }
         }
-
+        
+        
         public void Disable()
         {
             m_State = false;

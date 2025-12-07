@@ -1,4 +1,5 @@
 ﻿using System;
+using Interfaces.Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,11 +13,14 @@ namespace UI
         [SerializeField] private Button m_Button;
         
         private IStatsService m_StatsService;
-        private bool m_BoosterMode;
+        private IFeaturesService m_FeaturesService;
+        
         [Inject]
-        public void Construct(IStatsService statsService)
+        public void Construct(IStatsService statsService, IFeaturesService featuresService)
         {
             m_StatsService = statsService;
+            m_FeaturesService = featuresService;
+            
             SetCurrentLevel(m_StatsService.CurrentBoosterLevel);
             m_Button.onClick.AddListener(PlayButton);
         }
@@ -37,7 +41,7 @@ namespace UI
         {
             if (_GamePhase == GamePhase.MAIN_MENU)
             {
-                if (m_BoosterMode)
+                if (m_FeaturesService.GetFeatureState(Feature.BoosterPlayMode))
                 {
                     Enable();
                 }
@@ -56,16 +60,14 @@ namespace UI
 
         public void Enable()
         {
-            m_BoosterMode = true;
-            Transition(m_BoosterMode);
-            gameObject.SetActive(m_BoosterMode);
+            Transition(true);
+            gameObject.SetActive(true);
         }
 
         public void Disable()
         {
-            m_BoosterMode = false;
-            Transition(m_BoosterMode);
-            gameObject.SetActive(m_BoosterMode);
+            Transition(false);
+            gameObject.SetActive(false);
         }
     }
 }

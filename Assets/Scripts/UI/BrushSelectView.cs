@@ -20,12 +20,13 @@ namespace UI
         [SerializeField] private Shader m_StencilShader;
         private List<BrushItem> m_SkinItems = new List<BrushItem>();
         private IStatsService m_StatsService;
-        private bool m_BrushSelect;
-
+        private IFeaturesService m_FeaturesService;
+        
         [Inject]
         public void Construct(IStatsService statsService, IFeaturesService featuresService)
         {
             m_StatsService = statsService;
+            m_FeaturesService = featuresService;
         }
         
         protected void Start()
@@ -122,7 +123,7 @@ namespace UI
                     m_SkinItems.ForEach(x => x.Show());
                     m_SelectedSkinItem.Show();
                     return;
-                case GamePhase.MAIN_MENU when m_BrushSelect:
+                case GamePhase.MAIN_MENU when m_FeaturesService.GetFeatureState(Feature.BrushSelect):
                     Enable();
                     break;
                 case GamePhase.MAIN_MENU:
